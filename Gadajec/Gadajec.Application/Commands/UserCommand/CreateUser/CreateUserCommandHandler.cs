@@ -5,6 +5,7 @@ namespace Gadajec.Application.Commands.UserCommand.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     {
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IGadajecDBContext _gadajecDBContext;
         private readonly IEncryptor _encryptor;
         private readonly IDateTime _dateTime;
@@ -18,6 +19,7 @@ namespace Gadajec.Application.Commands.UserCommand.CreateUser
         }
         public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            
             if (_gadajecDBContext.Users.Any(su => su.Email == request.Email))
             {
                 return Guid.Empty;

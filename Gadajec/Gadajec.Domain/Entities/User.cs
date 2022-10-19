@@ -18,9 +18,9 @@ namespace Gadajec.Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int ContactId { get; set; }
-        [NotMapped]
-        public List<Contact> ContactList { get; set; }
-        public List<Room> Rooms { get; set; }
+        //public int ContactId { get; set; }
+        //[NotMapped]
+        //public List<Contact> ContactList { get; set; } = new List<Contact>();
+        public virtual List<Room> Rooms { get; set; }  = new List<Room>();
     }
 }

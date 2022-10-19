@@ -30,7 +30,7 @@ namespace Gadajec.Application.Commands.RoomCommand.CreateRoom
             {
                 Room room = new Room()
                 {
-                    ID = Guid.NewGuid(),                    
+                    Id = Guid.NewGuid(),                    
                     Name = request.Name,
                     CreatedBy = request.CreatedBy,
                     CreatedAt = _dateTime.Now

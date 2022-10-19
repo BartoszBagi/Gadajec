@@ -1,6 +1,7 @@
 ﻿using Gadajec.Application.Common.Interfaces;
 using Gadajec.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -33,8 +34,11 @@ namespace Gadajec.Application.Commands.MessageCommand.CreateMessage
             };
             try
             {
+                var room = _context.Rooms.Include(r=>r.Users).FirstOrDefault(ru => ru.Id == request.RoomID);
+                var roomUsers = room.Users;
+                var recivers = roomUsers.Where(u => u.Id != request.SenderId).ToList();
 
-            foreach (var receiver in _context.Rooms.FirstOrDefault(ru => ru.ID == request.RoomID).Users.Where(u => u.Id != request.SenderId))
+                foreach (var receiver in recivers)
                 {
                     var fileName = $"{request.RoomID}_{receiver.Id}.json";                                                 
                     result = _fileStore.SafeMessageWrite(fileName, message);

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gadajec.Persistance.Migrations
 {
     [DbContext(typeof(GadajecDBContext))]
-    [Migration("20220811172531_Init")]
+    [Migration("20221017164609_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Gadajec.Persistance.Migrations
 
             modelBuilder.Entity("Gadajec.Domain.Entities.Room", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -42,20 +42,22 @@ namespace Gadajec.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Rooms", "Gadajec");
 
                     b.HasData(
                         new
                         {
-                            ID = new Guid("1ec00894-b394-4059-84bf-01d6b11b67a0"),
+                            Id = new Guid("c01e5e06-c53e-43dc-8269-5a21ef12ab98"),
+                            CreatedAt = new DateTime(2022, 10, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
                             Name = "C# - devs"
                         },
                         new
                         {
-                            ID = new Guid("420cc0c3-53f7-4cba-8e55-0350c6d1f159"),
+                            Id = new Guid("f72e7da3-cabd-411e-b1c0-7facac7ea9d5"),
+                            CreatedAt = new DateTime(2022, 10, 17, 18, 46, 9, 426, DateTimeKind.Local).AddTicks(151),
                             CreatedBy = "Admin",
                             Name = "SQL - devs"
                         });
@@ -66,9 +68,6 @@ namespace Gadajec.Persistance.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -90,16 +89,20 @@ namespace Gadajec.Persistance.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<Guid?>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Users", "Gadajec");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("86791339-8587-4014-9d28-601a69dc9fd0"),
-                            ContactId = 0,
-                            CreatedAt = new DateTime(2022, 8, 11, 19, 25, 31, 423, DateTimeKind.Local).AddTicks(559),
+                            Id = new Guid("0490123f-7b59-4eb0-818c-89fae4fb8d75"),
+                            CreatedAt = new DateTime(2022, 10, 17, 18, 46, 9, 425, DateTimeKind.Local).AddTicks(9970),
                             Email = "Bartosz@mail.com.pl",
                             FirstName = "Bartosz",
                             LastName = "Bagiński",
@@ -107,34 +110,16 @@ namespace Gadajec.Persistance.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RoomUser", b =>
-                {
-                    b.Property<Guid>("RoomsID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("RoomsID", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoomUser", "Gadajec");
-                });
-
-            modelBuilder.Entity("RoomUser", b =>
+            modelBuilder.Entity("Gadajec.Domain.Entities.User", b =>
                 {
                     b.HasOne("Gadajec.Domain.Entities.Room", null)
-                        .WithMany()
-                        .HasForeignKey("RoomsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Users")
+                        .HasForeignKey("RoomId");
+                });
 
-                    b.HasOne("Gadajec.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Gadajec.Domain.Entities.Room", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

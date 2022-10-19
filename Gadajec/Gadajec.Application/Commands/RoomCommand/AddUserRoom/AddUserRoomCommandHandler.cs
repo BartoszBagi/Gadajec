@@ -22,7 +22,8 @@ namespace Gadajec.Application.Commands.RoomCommand.AddUserRoom
         {
             try
             {
-                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.ID == request.RoomID);
+                var pom = _gadajecDbContext.Rooms.ToList();
+                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id.ToString().ToUpper() == request.RoomID.ToString().ToUpper());
                 var userToAdd = _gadajecDbContext.Users.FirstOrDefault(u => u.Id == request.UserID);
 
                 room.Users.Add(userToAdd);
@@ -33,7 +34,7 @@ namespace Gadajec.Application.Commands.RoomCommand.AddUserRoom
             }
             catch (Exception ex)
             {
-                _logger.Error($"Exception: {ex.Message}");
+                _logger.Info($"Exception: {ex.Message}");
                 return $"{ex.Message}";
             }
 
