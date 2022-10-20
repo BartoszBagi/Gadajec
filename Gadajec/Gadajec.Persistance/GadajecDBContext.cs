@@ -26,7 +26,7 @@ namespace Gadajec.Persistance
             // ApplyConfiguration dodaje konfiguracje entitis które rozszerzają IEntityTypeConfiguration //
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             //seedujemy dane
-           modelBuilder.SeedData();
+           //modelBuilder.SeedData();
             
         }
 

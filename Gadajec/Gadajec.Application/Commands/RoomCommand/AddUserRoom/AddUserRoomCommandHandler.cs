@@ -22,8 +22,9 @@ namespace Gadajec.Application.Commands.RoomCommand.AddUserRoom
         {
             try
             {
-                var pom = _gadajecDbContext.Rooms.ToList();
-                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id.ToString().ToUpper() == request.RoomID.ToString().ToUpper());
+                
+                //var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id.ToString().ToUpper() == request.RoomID.ToString().ToUpper());
+                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id == request.RoomID);
                 var userToAdd = _gadajecDbContext.Users.FirstOrDefault(u => u.Id == request.UserID);
 
                 room.Users.Add(userToAdd);

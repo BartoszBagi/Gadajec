@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gadajec.Application.Queries.Message.SendMessage
+namespace Gadajec.Application.Commands.MessageCommand.SendMessage
 {
-    public class SendMessageQuery : IRequest<string>
+    public class SendMessageCommand : IRequest<string>
     {
         public Guid RoomID { get; set; }
         public Guid ReceiverId { get; set; }

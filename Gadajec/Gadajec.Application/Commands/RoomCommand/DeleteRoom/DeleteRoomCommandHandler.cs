@@ -18,11 +18,11 @@ namespace Gadajec.Application.Commands.RoomCommand.DeleteRoom
         }
         public async Task<bool> Handle(DeleteRoomCommand request, CancellationToken cancellationToken)
         {
-            var roomToDelete = _gadajecDBContext.Users.FirstOrDefault(u => u.Id == request.RoomId);
+            var roomToDelete = _gadajecDBContext.Rooms.FirstOrDefault(u => u.Id == request.RoomId);
 
             if (roomToDelete != null)
             {
-                _gadajecDBContext.Users.Remove(roomToDelete);
+                _gadajecDBContext.Rooms.Remove(roomToDelete);
                 await _gadajecDBContext.SaveChangesAsync(true);
 
                 return true;

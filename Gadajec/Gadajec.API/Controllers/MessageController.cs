@@ -1,5 +1,5 @@
 ﻿using Gadajec.Application.Commands.MessageCommand.CreateMessage;
-using Gadajec.Application.Queries.Message.SendMessage;
+using Gadajec.Application.Commands.MessageCommand.SendMessage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gadajec.API.Controllers
@@ -22,7 +22,7 @@ namespace Gadajec.API.Controllers
         }
 
         [HttpPost("/send")]
-        public async Task<IActionResult> Send(SendMessageQuery command)
+        public async Task<IActionResult> Send(SendMessageCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);

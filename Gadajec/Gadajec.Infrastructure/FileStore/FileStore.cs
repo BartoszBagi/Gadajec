@@ -71,9 +71,14 @@ namespace Gadajec.Infrastructure.FileStore
                 DirectoryInfo messagesDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "Messages");
                 FileInfo[] messages = messagesDirectory.GetFiles("*.json");
 
-                var jsonString = File.ReadAllText(messages.Where(m => m.Name == $"{fileName}").ToString());
+                var messageToSend = messages.FirstOrDefault(m => m.Name == $"{fileName}").ToString();
+                var jsonString = File.ReadAllText(messageToSend);
+
+                File.Delete(messageToSend);
 
                 return jsonString;
+
+                
             }
             catch (Exception ex)
             {
@@ -82,6 +87,8 @@ namespace Gadajec.Infrastructure.FileStore
             }
             
         }
+
+
         public static Dictionary<String, Object> parse(byte[] json)
         {
             try

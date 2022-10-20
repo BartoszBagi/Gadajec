@@ -13,7 +13,7 @@ namespace Gadajec.Domain.Entities
         public DateTime MessageDate { get; set; }      
         public string MessageText { get; set; }
        // public List<Attachment>? Attachments { get; set; }
-        public List<User>? Receivers { get; set; }
+        //public List<User>? Receivers { get; set; }
 
 
     }
