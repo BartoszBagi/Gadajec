@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Gadajec.Application.Common.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Gadajec.Persistance
 {
-    public abstract class DesignTimeDbContextFactoryBase<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
+    public abstract class DesignTimeDbContextFactoryBase<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : IdentityDbContext<ApiUser>
     {
         private const string ConnectionStringName = "GadajecDatabase";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";

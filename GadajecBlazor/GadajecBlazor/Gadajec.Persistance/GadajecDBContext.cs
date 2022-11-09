@@ -9,10 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Gadajec.Persistance;
 using Gadajec.Persistance.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Gadajec.Application.Common.Models;
 
 namespace Gadajec.Persistance
 {
-    public class GadajecDBContext : DbContext, IGadajecDBContext
+    public class GadajecDBContext : IdentityDbContext<ApiUser>, IGadajecDBContext
     {
         private readonly IDateTime _dateTime;
 
@@ -28,6 +30,7 @@ namespace Gadajec.Persistance
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema(Schema);
             // ApplyConfiguration dodaje konfiguracje entitis które rozszerzają IEntityTypeConfiguration //
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

@@ -1,4 +1,6 @@
 ﻿using Gadajec.Application.Common.Interfaces;
+using Gadajec.Application.Common.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,10 @@ namespace Gadajec.Persistance
             services.AddDbContext<GadajecDBContext>(
                 x => x.UseSqlServer(configuration.GetConnectionString("GadajecDatabase"),
                 x => x.MigrationsHistoryTable("__Gadajec_MigrationHistory", "Gadajec")));
+
+            services.AddIdentityCore<ApiUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<GadajecDBContext>();
 
             services.AddScoped<IGadajecDBContext, GadajecDBContext>();
 
