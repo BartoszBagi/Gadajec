@@ -15,19 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1568F949-A75B-48B8-9CAB-20A5BF4EC636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Application", "Gadajec.Application\Gadajec.Application.csproj", "{AFECB8D5-7772-4229-A130-7F046B99896A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Application", "Gadajec.Application\Gadajec.Application.csproj", "{AFECB8D5-7772-4229-A130-7F046B99896A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Domain", "Gadajec.Domain\Gadajec.Domain.csproj", "{E39C0A55-EBCF-44B0-98DF-14013F82514B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Domain", "Gadajec.Domain\Gadajec.Domain.csproj", "{E39C0A55-EBCF-44B0-98DF-14013F82514B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Infrastructure", "Gadajec.Infrastructure\Gadajec.Infrastructure.csproj", "{045EFDE0-367E-419B-8877-B38C1B9E5101}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Infrastructure", "Gadajec.Infrastructure\Gadajec.Infrastructure.csproj", "{045EFDE0-367E-419B-8877-B38C1B9E5101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Persistance", "Gadajec.Persistance\Gadajec.Persistance.csproj", "{C98013AC-3C0A-4161-887B-CF6A0F1EBD19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Persistance", "Gadajec.Persistance\Gadajec.Persistance.csproj", "{C98013AC-3C0A-4161-887B-CF6A0F1EBD19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Server", "Gadajec.Server\Gadajec.Server.csproj", "{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Server", "Gadajec.Server\Gadajec.Server.csproj", "{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Client", "Gadajec.Client\Gadajec.Client.csproj", "{66A6A0B3-B772-4677-AB8C-0EF33C3218EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Shared", "Gadajec.Shared\Gadajec.Shared.csproj", "{1DCF72A2-FD36-435A-A247-DC1C1441BA57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Shared", "Gadajec.Shared\Gadajec.Shared.csproj", "{1DCF72A2-FD36-435A-A247-DC1C1441BA57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Client", "Gadajec.Client\Gadajec.Client.csproj", "{B6A9B700-569F-4C1C-A338-8B578F596B34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +55,14 @@ Global
 		{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66A6A0B3-B772-4677-AB8C-0EF33C3218EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A6A0B3-B772-4677-AB8C-0EF33C3218EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66A6A0B3-B772-4677-AB8C-0EF33C3218EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66A6A0B3-B772-4677-AB8C-0EF33C3218EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1DCF72A2-FD36-435A-A247-DC1C1441BA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1DCF72A2-FD36-435A-A247-DC1C1441BA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DCF72A2-FD36-435A-A247-DC1C1441BA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DCF72A2-FD36-435A-A247-DC1C1441BA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6A9B700-569F-4C1C-A338-8B578F596B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A9B700-569F-4C1C-A338-8B578F596B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A9B700-569F-4C1C-A338-8B578F596B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A9B700-569F-4C1C-A338-8B578F596B34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,8 +73,8 @@ Global
 		{045EFDE0-367E-419B-8877-B38C1B9E5101} = {6DD7879F-8CD6-4541-AF1F-BB19BB486537}
 		{C98013AC-3C0A-4161-887B-CF6A0F1EBD19} = {45077F20-C357-48AD-8036-1FB37556EFB5}
 		{A8AA22C7-26E5-4CB4-AE1F-D3DAC79082C2} = {8BB2325E-01C3-458B-875F-AF720A1EADCD}
-		{66A6A0B3-B772-4677-AB8C-0EF33C3218EB} = {8BB2325E-01C3-458B-875F-AF720A1EADCD}
 		{1DCF72A2-FD36-435A-A247-DC1C1441BA57} = {1568F949-A75B-48B8-9CAB-20A5BF4EC636}
+		{B6A9B700-569F-4C1C-A338-8B578F596B34} = {8BB2325E-01C3-458B-875F-AF720A1EADCD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02CA3A21-8060-425E-94D9-C47F699D1BF0}
