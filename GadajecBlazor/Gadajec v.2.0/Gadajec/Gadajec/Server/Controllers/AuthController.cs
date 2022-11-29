@@ -1,4 +1,5 @@
-﻿using Gadajec.Application.Commands.Auth.Register;
+﻿
+using Gadajec.Application.Commands.Auth.Register;
 using Gadajec.Application.Queries.Auth.Login;
 using Gadajec.Shared.Auth.Commands.Login;
 using Gadajec.Shared.Auth.Commands.Register;

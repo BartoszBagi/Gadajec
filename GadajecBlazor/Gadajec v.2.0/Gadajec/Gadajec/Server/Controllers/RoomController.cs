@@ -1,4 +1,5 @@
-﻿using Gadajec.Application.Commands.Rooms.CreateRoom;
+﻿using Gadajec.Application.Commands.Rooms.AddRoomUser;
+using Gadajec.Application.Commands.Rooms.CreateRoom;
 using Gadajec.Application.Commands.Rooms.DeleteRoom;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,11 +28,11 @@ namespace Gadajec.Server.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("/addUser")]
-        //public async Task<IActionResult> AddUser(AddUserRoomCommand command)
-        //{
-        //    var result = await Mediator.Send(command);
-        //    return Ok(result);
-        //}
+        [HttpPost("/addUser")]
+        public async Task<IActionResult> AddUser(AddUserRoomCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
     }
 }

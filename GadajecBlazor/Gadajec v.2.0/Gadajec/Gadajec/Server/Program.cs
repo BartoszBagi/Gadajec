@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Gadajec.Application;
-using Gadajec.Persistance;
+//using Gadajec.Application;
+//using Gadajec.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddApplication();
-builder.Services.AddPersistance(builder.Configuration);
+//builder.Services.AddApplication();
+//builder.Services.AddPersistance(builder.Configuration);
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

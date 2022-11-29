@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Gadajec v.3.0\Gadajec.Client\Gadajec.Client\Gadajec.Client.csproj" />
+    <ProjectReference Include="..\..\..\..\Gadajec v.4.0\Gadajec.Client\Gadajec.Client\Gadajec.Client.csproj" />
     <ProjectReference Include="..\..\Gadajec.Application\Gadajec.Application.csproj" />
     <ProjectReference Include="..\..\Gadajec.Persistance\Gadajec.Persistance.csproj" />
     <ProjectReference Include="..\Shared\Gadajec.Shared.csproj" />

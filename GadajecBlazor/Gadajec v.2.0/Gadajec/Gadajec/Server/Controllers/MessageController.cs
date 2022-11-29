@@ -1,4 +1,5 @@
-﻿using Gadajec.Application.Commands.Messages;
+﻿
+using Gadajec.Application.Commands.Messages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gadajec.Server.Controllers
@@ -21,8 +22,8 @@ namespace Gadajec.Server.Controllers
 
         }
 
-        // HttpContext.Response.StatusCode = 401; --unauthorised | możemy bezpośrednio dostać się do statusu jaki ma być zwrócony.
-        // właśność każdego kontrolera
+        //HttpContext.Response.StatusCode = 401; --unauthorised | możemy bezpośrednio dostać się do statusu jaki ma być zwrócony.
+        //właśność każdego kontrolera
         //return StatusCode(401, $"Hello {właściwość});
         //return NotFound(result); trzecia możliwość zwrócenia kodu
     }
