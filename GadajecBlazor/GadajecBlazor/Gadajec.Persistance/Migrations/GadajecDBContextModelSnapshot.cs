@@ -146,15 +146,15 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("523c84dd-1142-4377-824c-1cc2fc69b0f6"),
-                            CreatedAt = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("e7eaf994-d6ec-40ee-ab5a-aa1eac5ee3d6"),
+                            CreatedAt = new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
                             Name = "C# - devs"
                         },
                         new
                         {
-                            Id = new Guid("a09ccf7d-c0b8-47be-92aa-79a47df73959"),
-                            CreatedAt = new DateTime(2022, 11, 9, 17, 55, 40, 663, DateTimeKind.Local).AddTicks(1372),
+                            Id = new Guid("bc7b6547-36a6-448c-9197-c344a7cf2ad7"),
+                            CreatedAt = new DateTime(2022, 11, 25, 19, 25, 33, 994, DateTimeKind.Local).AddTicks(7666),
                             CreatedBy = "Admin",
                             Name = "SQL - devs"
                         });
@@ -193,8 +193,8 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4e807fb8-3d32-4f10-bf8b-cfb2012419f9"),
-                            CreatedAt = new DateTime(2022, 11, 9, 17, 55, 40, 663, DateTimeKind.Local).AddTicks(1124),
+                            Id = new Guid("665da28b-adb7-4856-ba6b-7969516fd82e"),
+                            CreatedAt = new DateTime(2022, 11, 25, 19, 25, 33, 994, DateTimeKind.Local).AddTicks(7499),
                             Email = "Bartosz@mail.com.pl",
                             FirstName = "Bartosz",
                             LastName = "Bagiński",

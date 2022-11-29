@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Gadajec.Persistance;
 using Gadajec.Persistance.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Gadajec.Application.Common.Models;
