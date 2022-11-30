@@ -10,17 +10,21 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\Gadajec.Client.csproj" />
+    <ProjectReference Include="..\Gadajec.Client\Gadajec.Client.csproj" />
     <ProjectReference Include="..\Gadajec.Application\Gadajec.Application.csproj" />
     <ProjectReference Include="..\Gadajec.Infrastructure\Gadajec.Infrastructure.csproj" />
     <ProjectReference Include="..\Gadajec.Persistance\Gadajec.Persistance.csproj" />
-    <ProjectReference Include="..\Shared\Gadajec.Shared.csproj" />
+    <ProjectReference Include="..\Gadajec.Shared\Gadajec.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

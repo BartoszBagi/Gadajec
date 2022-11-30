@@ -13,20 +13,20 @@ namespace Gadajec.Persistance.Services
     {
         public static void SeedData(this ModelBuilder modelBuilder)
         {
-            Encryptor encryptor = new Encryptor();
-            modelBuilder.Entity<User>(u =>
-            {
-                u.HasData(new User()
-                {
-                    Id = Guid.NewGuid(),
-                    Password = encryptor.Encrypt("Haslo"),
-                    Email = "Bartosz@mail.com.pl",
-                    CreatedAt = DateTime.Now,
-                    FirstName = "Bartosz",
-                    LastName = "Bagiński"
+            //Encryptor encryptor = new Encryptor();
+            //modelBuilder.Entity<User>(u =>
+            //{
+            //    u.HasData(new User()
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Password = encryptor.Encrypt("Haslo"),
+            //        Email = "Bartosz@mail.com.pl",
+            //        CreatedAt = DateTime.Now,
+            //        FirstName = "Bartosz",
+            //        LastName = "Bagiński"
 
-                });
-            });
+            //    });
+            //});
 
 
             modelBuilder.Entity<Room>().HasData(

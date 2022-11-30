@@ -15,16 +15,15 @@ namespace Gadajec.Persistance
 {
     public class GadajecDBContext : IdentityDbContext<ApiUser>, IGadajecDBContext
     {
-        private readonly IDateTime _dateTime;
+
 
         public string Schema { get; } = "Gadajec";
-        public DbSet<User> Users { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public GadajecDBContext(DbContextOptions<GadajecDBContext> options, IDateTime dateTime) : base(options)
+        public GadajecDBContext(DbContextOptions<GadajecDBContext> options) : base(options)
         {
-            _dateTime = dateTime;
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

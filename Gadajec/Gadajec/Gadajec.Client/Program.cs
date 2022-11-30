@@ -25,7 +25,7 @@ builder.Services.AddScoped<ApiAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(p =>
                 p.GetRequiredService<ApiAuthenticationStateProvider>());
 
-//builder.Services.AddNotifications();
+builder.Services.AddNotifications();
 //builder.Services.AddLocalization();
 
 await builder.Build().RunAsync();

@@ -3,14 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Gadajec.Persistance.Migrations
 {
-    /// <inheritdoc />
     public partial class Init : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -89,23 +85,6 @@ namespace Gadajec.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                schema: "Gadajec",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,48 +204,17 @@ namespace Gadajec.Persistance.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RoomUser",
+            migrationBuilder.InsertData(
                 schema: "Gadajec",
-                columns: table => new
-                {
-                    RoomsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomUser", x => new { x.RoomsId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_RoomUser_Rooms_RoomsId",
-                        column: x => x.RoomsId,
-                        principalSchema: "Gadajec",
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoomUser_Users_UsersId",
-                        column: x => x.UsersId,
-                        principalSchema: "Gadajec",
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                table: "Rooms",
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Name" },
+                values: new object[] { new Guid("2dbd19ce-ed79-43b4-a05b-39f38fd57e2a"), new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Local), "Admin", "C# - devs" });
 
             migrationBuilder.InsertData(
                 schema: "Gadajec",
                 table: "Rooms",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("bc7b6547-36a6-448c-9197-c344a7cf2ad7"), new DateTime(2022, 11, 25, 19, 25, 33, 994, DateTimeKind.Local).AddTicks(7666), "Admin", "SQL - devs" },
-                    { new Guid("e7eaf994-d6ec-40ee-ab5a-aa1eac5ee3d6"), new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Local), "Admin", "C# - devs" }
-                });
-
-            migrationBuilder.InsertData(
-                schema: "Gadajec",
-                table: "Users",
-                columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password" },
-                values: new object[] { new Guid("665da28b-adb7-4856-ba6b-7969516fd82e"), new DateTime(2022, 11, 25, 19, 25, 33, 994, DateTimeKind.Local).AddTicks(7499), "Bartosz@mail.com.pl", "Bartosz", "Bagiński", "SGFzbG8=" });
+                values: new object[] { new Guid("d1d765ef-f867-4416-8efd-08320bb449d9"), new DateTime(2022, 11, 30, 17, 59, 47, 38, DateTimeKind.Local).AddTicks(9892), "Admin", "SQL - devs" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -313,15 +261,8 @@ namespace Gadajec.Persistance.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoomUser_UsersId",
-                schema: "Gadajec",
-                table: "RoomUser",
-                column: "UsersId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -349,7 +290,7 @@ namespace Gadajec.Persistance.Migrations
                 schema: "Gadajec");
 
             migrationBuilder.DropTable(
-                name: "RoomUser",
+                name: "Rooms",
                 schema: "Gadajec");
 
             migrationBuilder.DropTable(
@@ -358,14 +299,6 @@ namespace Gadajec.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers",
-                schema: "Gadajec");
-
-            migrationBuilder.DropTable(
-                name: "Rooms",
-                schema: "Gadajec");
-
-            migrationBuilder.DropTable(
-                name: "Users",
                 schema: "Gadajec");
         }
     }

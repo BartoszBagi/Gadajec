@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gadajec.Domain\Gadajec.Domain.csproj" />
-    <ProjectReference Include="..\Shared\Gadajec.Shared.csproj" />
+    <ProjectReference Include="..\Gadajec.Shared\Gadajec.Shared.csproj" />
   </ItemGroup>
 
 </Project>

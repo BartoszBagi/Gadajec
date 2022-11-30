@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Server", "Gadajec\Server\Gadajec.Server.csproj", "{C98188BC-F9BC-4467-8766-BBDD2F6998FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Server", "Gadajec\Gadajec.Server\Gadajec.Server.csproj", "{C98188BC-F9BC-4467-8766-BBDD2F6998FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Client", "Gadajec\Client\Gadajec.Client.csproj", "{A0646C9A-07F3-408C-A333-750027CB4F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Client", "Gadajec\Gadajec.Client\Gadajec.Client.csproj", "{A0646C9A-07F3-408C-A333-750027CB4F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gadajec.Shared", "Gadajec\Shared\Gadajec.Shared.csproj", "{F28E606F-2831-4D12-92BD-1E253839F15A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gadajec.Shared", "Gadajec\Gadajec.Shared\Gadajec.Shared.csproj", "{F28E606F-2831-4D12-92BD-1E253839F15A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{8B7ED52C-A0B9-4B6E-A54E-9B0E8E890A64}"
 EndProject

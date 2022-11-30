@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Gadajec.Shared.csproj" />
+    <ProjectReference Include="..\Gadajec.Shared\Gadajec.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
 {
-    public class AddUserRoomCommand : IRequest<string>
+    public class AddUserRoomCommand : IRequest<bool>
     {
         public Guid UserID { get; set; }
         public Guid RoomID { get; set; }

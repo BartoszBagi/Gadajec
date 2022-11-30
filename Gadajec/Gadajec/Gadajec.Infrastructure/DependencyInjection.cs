@@ -1,5 +1,4 @@
 ﻿using Gadajec.Application.Common.Interfaces;
-using Gadajec.Infrastructure.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,7 +15,7 @@ namespace Gadajec.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddTransient<IDateTime, DateTimeService>();
+            //services.AddTransient<IDateTime, DateTimeService>();
             //services.AddTransient<IFileStore, FileStore.FileStore>();
             //services.AddTransient<IDirectoryWrapper, DirectoryWrapper>();
             //services.AddTransient<IFileWrapper, FileWrapper>();

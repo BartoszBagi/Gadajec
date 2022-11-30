@@ -12,11 +12,11 @@ namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
     public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, bool>
     {
         private readonly IGadajecDBContext _gadajecDBContext;
-        private readonly IDateTime _dateTime;
-        public CreateRoomCommandHandler(IGadajecDBContext gadajecDBContext, IDateTime dateTime)
+
+        public CreateRoomCommandHandler(IGadajecDBContext gadajecDBContext)
         {
             _gadajecDBContext = gadajecDBContext;
-            _dateTime = dateTime;
+
         }
 
         public async Task<bool> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
                     Id = Guid.NewGuid(),
                     Name = request.Name,
                     CreatedBy = request.CreatedBy,
-                    CreatedAt = _dateTime.Now
+                    CreatedAt = DateTime.Now
                 };
 
 
