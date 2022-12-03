@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using Gadajec.Application.Common.Static;
 
 namespace Gadajec.Application.Queries.Auth.Login
 {
@@ -66,7 +67,7 @@ namespace Gadajec.Application.Queries.Auth.Login
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim(CustomClaimTypes.Uid, user.Id)
             }
                 .Union(userClaims)
                 .Union(roleClaims);
@@ -80,7 +81,7 @@ namespace Gadajec.Application.Queries.Auth.Login
                     );
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

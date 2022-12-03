@@ -1,5 +1,7 @@
 ﻿using Gadajec.Application.Common.Interfaces;
+using Gadajec.Application.Common.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,12 @@ namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
     {
         private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IGadajecDBContext _gadajecDbContext;
+        private readonly UserManager<ApiUser> _usermanager;
 
-        public AddUserRoomCommandHandler(IGadajecDBContext gadajecDBContext)
+        public AddUserRoomCommandHandler(IGadajecDBContext gadajecDBContext, UserManager<ApiUser> usermanager)
         {
             _gadajecDbContext = gadajecDBContext;
+            _usermanager = usermanager;
         }
 
         public async Task<bool> Handle(AddUserRoomCommand request, CancellationToken cancellationToken)
@@ -26,8 +30,9 @@ namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
                 //var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id.ToString().ToUpper() == request.RoomID.ToString().ToUpper());
                 var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id == request.RoomID);
                 //var userToAdd = _gadajecDbContext.Users.FirstOrDefault(u => u.Id == request.UserID);
+                var userToAdd = _usermanager.FindByIdAsync(request.UserID.ToString());
 
-                //room.Users.Add(userToAdd);
+                room.Users.Add(userToAdd.Result);
 
                 await _gadajecDbContext.SaveChangesAsync(true);
 

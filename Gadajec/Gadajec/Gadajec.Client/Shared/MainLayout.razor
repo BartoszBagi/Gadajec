@@ -1,19 +1,18 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>GadajecBlazor</PageTitle>
+<TopNav />
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<NavMenu />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+<ErrorBoundary>
+    <ChildContent>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <p>Sorry there is nothing here to see!</p>
+    </ErrorContent>
+</ErrorBoundary>
+

@@ -23,6 +23,21 @@ namespace Gadajec.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ApiUserRoom", b =>
+                {
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UsersId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UsersId", "UsersId1");
+
+                    b.HasIndex("UsersId1");
+
+                    b.ToTable("ApiUserRoom", "Gadajec");
+                });
+
             modelBuilder.Entity("Gadajec.Application.Common.Models.ApiUser", b =>
                 {
                     b.Property<string>("Id")
@@ -146,15 +161,15 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2dbd19ce-ed79-43b4-a05b-39f38fd57e2a"),
-                            CreatedAt = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("07b17359-20e0-4cac-8366-a9f7b37d564e"),
+                            CreatedAt = new DateTime(2022, 12, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
                             Name = "C# - devs"
                         },
                         new
                         {
-                            Id = new Guid("d1d765ef-f867-4416-8efd-08320bb449d9"),
-                            CreatedAt = new DateTime(2022, 11, 30, 17, 59, 47, 38, DateTimeKind.Local).AddTicks(9892),
+                            Id = new Guid("a477c367-042e-4a04-98ec-f0807741d190"),
+                            CreatedAt = new DateTime(2022, 12, 4, 21, 1, 6, 381, DateTimeKind.Local).AddTicks(7561),
                             CreatedBy = "Admin",
                             Name = "SQL - devs"
                         });
@@ -291,6 +306,21 @@ namespace Gadajec.Persistance.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", "Gadajec");
+                });
+
+            modelBuilder.Entity("ApiUserRoom", b =>
+                {
+                    b.HasOne("Gadajec.Domain.Models.Room", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gadajec.Application.Common.Models.ApiUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

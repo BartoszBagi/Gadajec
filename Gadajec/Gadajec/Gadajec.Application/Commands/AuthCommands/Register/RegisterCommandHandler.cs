@@ -13,6 +13,10 @@ namespace Gadajec.Application.Commands.AuthCommands.Register
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
     {
         private readonly UserManager<ApiUser> userManager;
+        public RegisterCommandHandler(UserManager<ApiUser> userManager)
+        {
+            this.userManager = userManager;
+        }
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             ApiUser user = MapDtoToApiUser(request.UserDto);

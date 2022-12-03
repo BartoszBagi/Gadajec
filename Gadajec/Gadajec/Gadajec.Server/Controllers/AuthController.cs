@@ -22,7 +22,7 @@ namespace Gadajec.Server.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(UserDto userDto)
+        public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Gadajec.Server.Controllers
         }
         [HttpPost]
         [Route("login")]
-        public async Task<AuthResponse> Login(LoginUserDto userDto)
+        public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginUserDto userDto)
         {
             try
             {
@@ -45,9 +45,9 @@ namespace Gadajec.Server.Controllers
 
                 return response;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                return Problem($"Something Went Wrong in the {nameof(Login)}", statusCode: 500);
                 throw;
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gadajec.Application.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Gadajec.Domain.Models
         public string Name { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
-        //public virtual List<User> Users { get; set; } = new List<User>();
+        public virtual List<ApiUser> Users { get; set; } = new List<ApiUser>();
 
     }
 }
