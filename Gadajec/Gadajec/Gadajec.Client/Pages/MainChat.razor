@@ -1,6 +1,5 @@
 ﻿@page "/mainchat"
 @using Gadajec.Client.Brokers.API
-@attribute [Authorize]
 
 @inject NavigationManager NavigationManager
 @inject IApiBroker apiBroker;
@@ -14,16 +13,16 @@
 
 @if (!IsConnected)
 {
-    <div class="input-group">
-        <input @bind="username" class="form-control" placeholder="What's your name?">
+    <div class="input-group text-center">
+        <!--<input @bind="username" class="form-control" placeholder="What's your name?">-->
         <button class="btn btn-primary form-control-append" @onclick="Connect">
-            Connect
+            Dołącz do drużyny
         </button>
     </div>
 }
 else
 {
-    <textarea class="float-end" style="width: 70vw; height: 80vh;" @ref="TextAreaRef">
+    <textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">
         @messages
                 </textarea>
     <div class="input-group float-end" style="width: 70vw">

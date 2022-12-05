@@ -14,6 +14,6 @@ namespace Gadajec.Shared.Rooms.Queries
         public DateTime? CreatedAt { get; set; }
         public int Status { get; set; } = 1;
 
-        public virtual List<ApiUser> Users { get; set; } = new List<ApiUser>();
+        public virtual List<ApiUserVm> Users { get; set; } = new List<ApiUserVm>();
     }
 }

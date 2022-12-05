@@ -36,6 +36,7 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
                     Name = room.Name,
                     CreatedAt = room.CreatedAt,
                     CreatedBy = room.CreatedBy
+
                 };
                 result.Add(roomVm);
             }
