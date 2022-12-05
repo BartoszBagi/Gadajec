@@ -62,3 +62,8 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+.exotic{
+    text-shadow: 1px 1px 3px #000;
+    color: #808080;
+
+}
