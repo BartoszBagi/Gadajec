@@ -47,7 +47,7 @@ namespace GadajecBlazor.Providers
 
         public async Task LoggedOut()
         {
-            await localStorage.RemoveItemAsync("accessToken");
+            await localStorage.RemoveItemAsync("accesToken");
             var nobody = new ClaimsPrincipal(new ClaimsIdentity());
             var authState = Task.FromResult(new AuthenticationState(nobody));
             NotifyAuthenticationStateChanged(authState);
@@ -55,7 +55,7 @@ namespace GadajecBlazor.Providers
 
         private async Task<List<Claim>> GetClaims()
         {
-            var savedToken = await localStorage.GetItemAsync<string>("accessToken");
+            var savedToken = await localStorage.GetItemAsync<string>("accesToken");
             var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(savedToken);
             var claims = tokenContent.Claims.ToList();
             claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));
