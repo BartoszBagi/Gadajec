@@ -65,11 +65,15 @@
         });    
     }
 
+
+
     public async ValueTask DisposeAsync()
     {
         if (_notificationService is not null)
         {
             await _notificationService.DisposeAsync();
         }
+
     }
+
 }

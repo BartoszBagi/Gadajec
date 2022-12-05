@@ -1,6 +1,7 @@
 using Gadajec.Application;
 using Gadajec.Infrastructure;
 using Gadajec.Persistance;
+using Gadajec.Server.Hubs.ChatHub;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(options => 
+    options.MimeTypes = ResponseCompressionDefaults
+    .MimeTypes 
+    .Concat(new[] {"aplication/octet-stream"})    
+);
 
 
 builder.Services.AddSwaggerGen();
@@ -40,6 +47,7 @@ builder.Services.AddAuthentication(options => {
 
 var app = builder.Build();
 
+app.UseResponseCompression();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -64,6 +72,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 app.MapFallbackToFile("index.html");
+
+
 
 app.Run();
