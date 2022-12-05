@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+
+<TopNav />
+
+<NavMenu />
+
+<ErrorBoundary>
+    <ChildContent>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @Body
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <p>Sorry there is nothing here to see!</p>
+    </ErrorContent>
+</ErrorBoundary>
+
+

@@ -1,0 +1,79 @@
+﻿@page "/"
+@using Majorsoft.Blazor.Components.Notifications
+
+@inject IHtmlNotificationService _notificationService
+@implements IAsyncDisposable
+
+<PageTitle>Gadajec</PageTitle>
+
+<HeadContent>
+    <meta name="description" content="This is test from index" />
+</HeadContent>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active"><a href="#">Home</a></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            HTML5 Notification supported: @_notificationSupported
+            Notification user consent: @_htmlNotificationPermission
+            @if (_htmlNotificationPermission != HtmlNotificationPermissionTypes.Granted)
+            {
+                <button class="btn btn-primary" @onclick="RequestPermission">Request User Permission</button>                
+            }
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@code {
+    private bool _notificationSupported;
+    private HtmlNotificationPermissionTypes _htmlNotificationPermission;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _notificationSupported = await _notificationService.IsBrowserSupportedAsync();
+            _htmlNotificationPermission = await _notificationService.CheckPermissionAsync();
+        }
+    }
+
+    private async Task RequestPermission()
+    {
+        await _notificationService.RequestPermissionAsync(async res =>
+        {
+            _htmlNotificationPermission = res;
+            StateHasChanged();
+        });    
+    }
+
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_notificationService is not null)
+        {
+            await _notificationService.DisposeAsync();
+        }
+
+    }
+
+}
