@@ -13,26 +13,9 @@ namespace Gadajec.Client.Service.Rooms
             this.apiBroker = apiBroker;
         }
 
-        public async Task<List<RoomForListVm>> GetAllRoomsAsync()
-        {
+        public async Task<List<RoomForListVm>> GetAllRoomsAsync() =>
+            await apiBroker.GetAllRoomsAsync();
 
-            return await apiBroker.GetAllRoomsAsync();
-
-        }
-
-        //public async Task AddPostAsync(AddPostVM post)
-        //{
-        //    ValidatePost(post);
-
-        //    try
-        //    {
-        //        await apiBroker.AddPostAsync(post);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw new PostBadRequestException(ex);
-        //    }
-        //}
+       
     }
 }

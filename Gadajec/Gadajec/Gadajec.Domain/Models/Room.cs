@@ -13,6 +13,7 @@ namespace Gadajec.Domain.Models
         public string Name { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string Description { get; set; }
         public virtual List<ApiUser> Users { get; set; } = new List<ApiUser>();
 
     }

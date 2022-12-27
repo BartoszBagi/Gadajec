@@ -1,0 +1,147 @@
+﻿@page "/rooms"
+<!-- Content Header (Page header) małpa attribute [Authorize] -->
+
+<PageTitle>Pokoje Gadajca</PageTitle>
+
+<HeadContent>
+    <meta name="description" content="This is test from posts" />
+</HeadContent>
+
+@inject IApiBroker apiBroker;
+@using Gadajec.Client.Brokers.API
+@using Gadajec.Client.Shared.Templates
+@using Gadajec.Shared.Rooms.Queries
+
+ <section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h1 class="text-center exotic">Pokoje</h1>
+            </div>
+            <div class="col-sm-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Gadajec</a></li>
+                    <li class="breadcrumb-item active">Pokoje</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <p class="mb-0">
+                <a href="/rooms/add" class="text-center">Nowy pokój</a>
+            </p>
+            </div>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 20%">
+                            Nazwa
+                        </th>
+                        <th style="width: 20%">
+                            Utworzył
+                        </th>
+                        <th>
+                            Użytkownicy
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Virtualize ItemsProvider="LoadRooms" Context="item">
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    <a href="/mainchat">
+                                        @item.Name
+                                    </a>
+                                    <br />
+                                    <small>
+                                        Created @item.CreatedAt.Value.ToShortDateString()
+                                    </small>
+                                </td>
+                                <td >
+                                    @item.CreatedBy
+                                </td>
+                                 <td >
+                                @if (@item.Users.Count() == 0)
+                                {
+                                    <p>brak zalogowanych użytkowników</p>
+                                }
+                                else
+                                {
+                                    @item.Users
+                                }
+                                </td>
+                                <td class="project-state">
+                                    <span>
+                                        @SetStatusValue(item.StatusId)
+                                    </span>
+                                </td>
+                            </tr>
+                    </Virtualize>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+
+@code {
+
+    protected async ValueTask<ItemsProviderResult<RoomForListVm>> LoadRooms(ItemsProviderRequest request)
+    {
+        var pageSize = request.Count;
+        var index = request.StartIndex;
+        var items = await apiBroker.GetAllRoomsAsync();
+        return new ItemsProviderResult<RoomForListVm>(items.Skip(index).Take(pageSize), items.Count());
+    }
+
+
+
+    private string SetStatusValue(int statusId)
+    {
+        string result;
+        switch (statusId)
+        {
+            case 1:
+                result = "Online";
+                break;
+            case 2:
+                result = "Offline";
+                break;
+            default:
+                result = "Offline";
+                break;
+        }
+        return result;
+    }
+
+
+}

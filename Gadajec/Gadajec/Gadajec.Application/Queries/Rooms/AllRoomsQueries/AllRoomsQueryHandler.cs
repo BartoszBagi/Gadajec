@@ -29,14 +29,27 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
         private List<RoomForListVm> MapRoomsToVm(List<Room> rooms)
         {
             var result = new List<RoomForListVm>();
+
             foreach (var room in rooms)
             {
+                var roomUsers = new List<ApiUserVm>();
+
+                foreach (var user in room.Users)
+                {
+                    var roomUser = new ApiUserVm()
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,                        
+                    };
+                    roomUsers.Add(roomUser);
+                }
                 var roomVm = new RoomForListVm()
                 {
+                    Id = room.Id,
                     Name = room.Name,
                     CreatedAt = room.CreatedAt,
-                    CreatedBy = room.CreatedBy
-
+                    CreatedBy = room.CreatedBy,
+                    Users = roomUsers
                 };
                 result.Add(roomVm);
             }

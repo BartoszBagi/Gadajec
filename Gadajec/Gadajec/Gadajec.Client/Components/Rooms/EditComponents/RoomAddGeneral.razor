@@ -1,0 +1,53 @@
+﻿
+<h3>RoomAddGeneral</h3>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">General</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <InputText Id="name" Label="Name" EditMode="@EditMode" @bind-Value="Name"></InputText>
+        <label for="scheduledDate">Scheduled Date</label>
+        <InputDate disabled="@EditMode" id="CreatedAt" @bind-Value="NewRoom.CreatedAt" @attributes="@InputAttributes"/>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+@code {
+    [Parameter]
+    public AddRoomVm NewRoom { get; set; }
+
+    private string name;
+
+    [Parameter]
+    public string Name
+    {
+        get => name;
+        set
+        {
+            if (name == value) return;
+            name = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> TitleChanged { get; set; }
+
+    [CascadingParameter(Name="EditMode")]
+    public bool EditMode { get; set; }
+
+    private Dictionary<string, object> InputAttributes { get; set; } =
+    new Dictionary<string, object>()
+        {
+        { "class", "form-control form-control-sm"},
+        { "maxlength", "20"},
+        { "required", "required"}
+        };
+
+}

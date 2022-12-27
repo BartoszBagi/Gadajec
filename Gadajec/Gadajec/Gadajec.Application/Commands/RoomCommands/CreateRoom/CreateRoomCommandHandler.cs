@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
 {
-    public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, bool>
+    public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, Guid>
     {
         private readonly IGadajecDBContext _gadajecDBContext;
 
@@ -19,29 +19,39 @@ namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
 
         }
 
-        public async Task<bool> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
         {
-            if (_gadajecDBContext.Rooms.Any(r => r.Name == request.Name))
+            try
             {
-                return false;
-            }
-
-            else
-            {
-                Room room = new Room()
+                if (_gadajecDBContext.Rooms.Any(r => r.Name == request.AdRoomVm.Name))
                 {
-                    Id = Guid.NewGuid(),
-                    Name = request.Name,
-                    CreatedBy = request.CreatedBy,
-                    CreatedAt = DateTime.Now
-                };
+                    return Guid.Empty;
+                }
+
+                else
+                {
+                    Room room = new Room()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = request.AdRoomVm.Name,
+                        CreatedBy = request.AdRoomVm.CreatedBy,
+                        CreatedAt = request.AdRoomVm.CreatedAt,
+                        Description = request.AdRoomVm.Description
+                    };
 
 
-                _gadajecDBContext.Rooms.Add(room);
-                await _gadajecDBContext.SaveChangesAsync(true);
+                    _gadajecDBContext.Rooms.Add(room);
+                    await _gadajecDBContext.SaveChangesAsync(true);
 
-                return true;
+                    return room.Id;
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
     }

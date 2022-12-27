@@ -12,7 +12,7 @@ namespace Gadajec.Shared.Rooms.Queries
         public string Name { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public int Status { get; set; } = 1;
+        public int StatusId { get; set; } = 1;
 
         public virtual List<ApiUserVm> Users { get; set; } = new List<ApiUserVm>();
     }
