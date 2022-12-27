@@ -22,6 +22,7 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
 
         public async Task<List<RoomForListVm>> Handle(AllRoomsQuery request, CancellationToken cancellationToken)
         {
+
             var rooms = await _context.Rooms.ToListAsync();
             return MapRoomsToVm(rooms);
         }
@@ -49,6 +50,7 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
                     Name = room.Name,
                     CreatedAt = room.CreatedAt,
                     CreatedBy = room.CreatedBy,
+                    Description = room.Description, 
                     Users = roomUsers
                 };
                 result.Add(roomVm);

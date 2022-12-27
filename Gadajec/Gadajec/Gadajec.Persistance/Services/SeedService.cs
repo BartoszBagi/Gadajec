@@ -30,8 +30,8 @@ namespace Gadajec.Persistance.Services
 
 
             modelBuilder.Entity<Room>().HasData(
-                new Room { Id = Guid.NewGuid(), Name = "C# - devs", CreatedBy = "Admin", CreatedAt = DateTime.Today },
-                new Room { Id = Guid.NewGuid(), Name = "SQL - devs", CreatedBy = "Admin", CreatedAt = DateTime.Now }
+                new Room { Id = Guid.NewGuid(), Name = "C# - devs", CreatedBy = "Admin", CreatedAt = DateTime.Today, Description = "Pokój skierowany dla osób pracujących w środowisku C# .Net" },
+                new Room { Id = Guid.NewGuid(), Name = "SQL - devs", CreatedBy = "Admin", CreatedAt = DateTime.Now, Description = "Tutaj porozmawiamy o SQL" }
                 );
 
         }

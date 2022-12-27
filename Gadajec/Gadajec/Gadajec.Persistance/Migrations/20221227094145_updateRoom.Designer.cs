@@ -4,6 +4,7 @@ using Gadajec.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gadajec.Persistance.Migrations
 {
     [DbContext(typeof(GadajecDBContext))]
-    partial class GadajecDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221227094145_updateRoom")]
+    partial class updateRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,24 +163,6 @@ namespace Gadajec.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms", "Gadajec");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8742de9d-e91d-42e4-a0c9-18533baeff13"),
-                            CreatedAt = new DateTime(2022, 12, 27, 0, 0, 0, 0, DateTimeKind.Local),
-                            CreatedBy = "Admin",
-                            Description = "Pokój skierowany dla osób pracujących w środowisku C# .Net",
-                            Name = "C# - devs"
-                        },
-                        new
-                        {
-                            Id = new Guid("4ddab081-8a66-4ecf-ae75-304458b16c68"),
-                            CreatedAt = new DateTime(2022, 12, 27, 10, 46, 37, 297, DateTimeKind.Local).AddTicks(3180),
-                            CreatedBy = "Admin",
-                            Description = "Tutaj porozmawiamy o SQL",
-                            Name = "SQL - devs"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

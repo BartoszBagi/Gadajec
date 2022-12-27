@@ -9,6 +9,6 @@ namespace Gadajec.Application.Commands.RoomCommands.DeleteRoom
 {
     public class DeleteRoomCommand : IRequest<bool>
     {
-        public Guid RoomId { get; set; }
+        public string RoomName { get; set; }
     }
 }
