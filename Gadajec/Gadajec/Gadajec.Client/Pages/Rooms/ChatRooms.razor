@@ -1,10 +1,11 @@
 ﻿@page "/rooms"
 <!-- Content Header (Page header) małpa attribute [Authorize] -->
+@attribute [Authorize]
 
 <PageTitle>Pokoje Gadajca</PageTitle>
 
 <HeadContent>
-    <meta name="description" content="This is test from posts" />
+    <meta name="description" content="This is test from rooms" />
 </HeadContent>
 
 @inject IApiBroker apiBroker;
@@ -79,7 +80,7 @@
                                     #
                                 </td>
                                 <td>
-                                    <a href="/mainchat">
+                                    <a href="/rooms/@item.Name">
                                         @item.Name
                                     </a>
                                     <br />

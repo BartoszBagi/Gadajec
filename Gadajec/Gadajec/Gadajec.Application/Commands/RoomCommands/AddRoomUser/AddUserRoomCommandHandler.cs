@@ -2,6 +2,7 @@
 using Gadajec.Application.Common.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,16 +27,18 @@ namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
         {
             try
             {
+                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Name == request.RoomUser.RoomName);
 
-                //var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id.ToString().ToUpper() == request.RoomID.ToString().ToUpper());
-                var room = _gadajecDbContext.Rooms.FirstOrDefault(r => r.Id == request.RoomID);
-                //var userToAdd = _gadajecDbContext.Users.FirstOrDefault(u => u.Id == request.UserID);
-                var userToAdd = _usermanager.FindByIdAsync(request.UserID.ToString());
+                var userToAdd = await _usermanager.FindByNameAsync(request.RoomUser.UserName);
+                
+                if (room.Users.Where(u => u.Email == userToAdd.Email).Count() == 0) 
+                {
+                    room.Users.Add(userToAdd);
+                    _gadajecDbContext.Rooms.Attach(room);
+                    await _gadajecDbContext.SaveChangesAsync(true);
+                }
 
-                room.Users.Add(userToAdd.Result);
-
-                await _gadajecDbContext.SaveChangesAsync(true);
-
+                
                 return true;
             }
             catch (Exception ex)
@@ -45,5 +48,6 @@ namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
             }
 
         }
+
     }
 }

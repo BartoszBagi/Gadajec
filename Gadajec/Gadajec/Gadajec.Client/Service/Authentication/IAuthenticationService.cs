@@ -6,5 +6,6 @@ namespace Gadajec.Client.Service.Authentication
     {
         Task<bool> AuthenticateAsync(LoginUserDto loginModel);
         public Task Logout();
+
     }
 }

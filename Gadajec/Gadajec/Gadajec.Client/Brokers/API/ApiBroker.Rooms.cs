@@ -18,7 +18,7 @@ namespace Gadajec.Client.Brokers.API
         public async Task DeleteRoomAsync(string roomName) =>
             await this.PostAsync<string>(RoomRelativeUrl + "/deleteRoom", roomName);
 
-        //public async Task AddRoomUserAsync(Guid userId, Guid roomId) =>
-        //    await this.PostAsync<>(RoomRelativeUrl + "/addUser", userId, roomId);
+        public async Task AddRoomUserAsync(RoomUserDto roomUser) =>
+            await this.PostAsync<RoomUserDto>(RoomRelativeUrl + "/addUser", roomUser);
     }
 }

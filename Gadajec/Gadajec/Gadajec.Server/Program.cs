@@ -2,6 +2,7 @@ using Gadajec.Application;
 using Gadajec.Infrastructure;
 using Gadajec.Persistance;
 using Gadajec.Server.Hubs.ChatHub;
+using Gadajec.Shared.Messages.PreviousChatArchive;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +28,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+builder.Services.AddSingleton<PreviousChat>();
+
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,10 +73,13 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-app.MapRazorPages();
-app.MapControllers();
-app.MapHub<ChatHub>("/chathub");
-app.MapFallbackToFile("index.html");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chathub");
+    endpoints.MapFallbackToFile("index.html");
+});
 
 
 

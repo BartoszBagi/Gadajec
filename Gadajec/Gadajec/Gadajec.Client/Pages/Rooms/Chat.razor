@@ -1,119 +1,129 @@
-﻿@page "/chat/{name?}"
+﻿@page "/rooms/{roomname?}"
+
 
 @using System.Globalization
 @using Blazored.LocalStorage
+@using Gadajec.Application.Common.Models
 @using Gadajec.Client.Brokers.API
+@using Gadajec.Client.Service.Authentication
+@using Gadajec.Shared.Messages.Commands
+@using GadajecBlazor.Providers
 @using GadajecBlazor.Shared.Auth.Commands.Login
 @using System.IdentityModel.Tokens.Jwt
+@using Microsoft.AspNetCore.Identity
 
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService localStorage
-@inject IApiBroker apiBroker
+@inject IApiBroker apiBroker;
 @inject IJSRuntime JSRuntime
-@inject AuthenticationState authenticationState
+@inject IAuthenticationService authService
+@inject AuthenticationStateProvider provider
+
+
 
 <PageTitle>Gadajec Chat</PageTitle>
 <HeadContent>
     <meta name="description" content="This is test from posts" />
 </HeadContent>
 
-<h1 class="text-center exotic">@Name</h1>
+<h1 class="text-center exotic">@RoomName</h1>
 
-@if (!IsConnected)
-{
-    <div class="input-group text-center">
-        <!--<input @bind="username" class="form-control" placeholder="What's your name?">-->
-        <button class="btn btn-primary form-control-append" @onclick="Connect">
-            Dołącz do drużyny!
-        </button>
-    </div>
-
-}
-else
-{
-    <textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">
-        @messages
+    <textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">      
+        @foreach (var message in messages)
+        {
+            @message
+            @newLine
+        }      
                 </textarea>
     <div class="input-group float-end" style="width: 70vw">
-        <input @bind-value="message"
+        <input @bind-value="messageInput"
            @bind-value:event="oninput"
            @onkeyup="HandleInput"
            class="form-control">
-        <button class="btn btn-primary form-group-append"
-            @onclick="Send"
-            disabled="@(!IsConnected)">
-            Send
-        </button>
+        <button class="btn btn-primary form-group-append" @onclick="Send" disabled="@(!IsConnected)">Send</button>
     </div>
-}
+
 @code {
 
     [Parameter]
-    public string? Name { get; set; }
-   
-
-    protected override void OnInitialized()
-    {
-        try
-        {
-            //GetLoggedUser();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            throw;
-        }
-
-
-        Name = Name ?? "domyślny";
-    }
-   // public string? UserName { get; set; }
-    private HubConnection? hubConnection;
-    private string messages = string.Empty;
-    private string username = string.Empty;
-    private string message = string.Empty;
+    public string? RoomName { get; set; }
+    public string? UserName { get; set; }
+    public HubConnection hubConnection;
+    private List<string> messages = new List<string>();
+    private string messageInput;
+    private string newLine = "\n";
     ElementReference TextAreaRef;
 
-    //private void GetLoggedUser()
-    //{
-    //    UserName = authenticationState.User.Identity?.Name;
-
-    //}
-    private async Task Connect()
+    protected override async Task OnParametersSetAsync()
     {
+        await GetLoggedUser();
+        await apiBroker.AddRoomUserAsync(new RoomUserDto(){UserName = UserName, RoomName = RoomName});       
+
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub?username={username}"))
+            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub"))
             .Build();
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            var msg = $"{(string.IsNullOrEmpty(user) ? "" : user + ": ")}{message}";
-            messages += msg + "\n";
+            var encodedMsg = $"{user}: {message}";
+
+            messages.Add(encodedMsg);
             JSRuntime.InvokeVoidAsync("scrollToBottom", TextAreaRef);
             StateHasChanged();
         });
 
         await hubConnection.StartAsync();
+
+        await hubConnection.SendAsync("JoinRoom", RoomName);
+
+        await GetMessages();
     }
 
-    private async Task Send()
+    private async Task GetMessages()
     {
-        if (hubConnection != null)
+        var previousMessages = await apiBroker.GetMessagesAsync(RoomName);
+        if (previousMessages != null)
         {
-            await hubConnection.SendAsync("AddMessageToChat", username, message);
-            message = string.Empty;
+            foreach (var previousMessage in previousMessages)
+            {
+                var encodedMsg = $"{previousMessage.SenderName}: {previousMessage.MessageText}";
+                messages.Add(encodedMsg);
+            }
         }
+
     }
+
+    private async Task GetLoggedUser()
+    {
+        var details = await provider.GetAuthenticationStateAsync();
+        UserName = details.User.Identity?.Name;
+    }
+
+    async Task Send()
+    {
+        await hubConnection.SendAsync("SendMessage", UserName, messageInput, RoomName);
+        var newMessage = new MessageVm()
+                {
+                    MessageDate = DateTime.Now,
+                    MessageText = messageInput,
+                    RoomName = RoomName,
+                    SenderName = UserName
+                };
+        messageInput = string.Empty;
+        await apiBroker.SendMessageAsync(newMessage);
+    }
+     
+    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
 
     private async Task HandleInput(KeyboardEventArgs args)
     {
         if (args.Key.Equals("Enter"))
-        {
+        {          
             await Send();
         }
     }
 
-    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+
 
     public async ValueTask DisposeAsync()
     {

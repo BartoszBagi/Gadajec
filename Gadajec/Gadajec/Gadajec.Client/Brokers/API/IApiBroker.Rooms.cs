@@ -8,7 +8,7 @@ namespace Gadajec.Client.Brokers.API
         Task<List<RoomForListVm>> GetAllRoomsAsync();
         Task AddRoomAsync(AddRoomVm room);
         Task DeleteRoomAsync(string roomName);
-        //Task AddRoomUserAsync(Guid userId, Guid roomId);
+        Task AddRoomUserAsync(RoomUserDto roomUser);
     }
 }
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Gadajec.Persistance.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Gadajec.Application.Common.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Gadajec.Persistance
 {
@@ -36,6 +37,7 @@ namespace Gadajec.Persistance
             modelBuilder.SeedData();
 
         }
+
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {

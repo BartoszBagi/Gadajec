@@ -32,6 +32,8 @@ namespace Gadajec.Application.Commands.AuthCommands.Register
             return Unit.Value;
         }
 
+
+
         private ApiUser MapDtoToApiUser(UserDto userDto)
         {
             return new ApiUser()

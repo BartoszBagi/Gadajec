@@ -80,7 +80,8 @@ namespace Gadajec.Persistance.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,17 +205,50 @@ namespace Gadajec.Persistance.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateTable(
+                name: "ApiUserRoom",
                 schema: "Gadajec",
-                table: "Rooms",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Name" },
-                values: new object[] { new Guid("2dbd19ce-ed79-43b4-a05b-39f38fd57e2a"), new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Local), "Admin", "C# - devs" });
+                columns: table => new
+                {
+                    RoomsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApiUserRoom", x => new { x.RoomsId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_ApiUserRoom_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalSchema: "Gadajec",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApiUserRoom_Rooms_RoomsId",
+                        column: x => x.RoomsId,
+                        principalSchema: "Gadajec",
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 schema: "Gadajec",
                 table: "Rooms",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Name" },
-                values: new object[] { new Guid("d1d765ef-f867-4416-8efd-08320bb449d9"), new DateTime(2022, 11, 30, 17, 59, 47, 38, DateTimeKind.Local).AddTicks(9892), "Admin", "SQL - devs" });
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "Name" },
+                values: new object[] { new Guid("6a98bb42-c925-4e15-a650-ce7bf06173d5"), new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Local), "Admin", "Pokój skierowany dla osób pracujących w środowisku C# .Net", ".Net - devs" });
+
+            migrationBuilder.InsertData(
+                schema: "Gadajec",
+                table: "Rooms",
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "Name" },
+                values: new object[] { new Guid("ead53eca-072e-4751-bd4d-204d388d6df0"), new DateTime(2022, 12, 31, 11, 6, 19, 517, DateTimeKind.Local).AddTicks(1908), "Admin", "Tutaj porozmawiamy o SQL", "SQL - devs" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApiUserRoom_UsersId",
+                schema: "Gadajec",
+                table: "ApiUserRoom",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -265,6 +299,10 @@ namespace Gadajec.Persistance.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApiUserRoom",
+                schema: "Gadajec");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims",
                 schema: "Gadajec");

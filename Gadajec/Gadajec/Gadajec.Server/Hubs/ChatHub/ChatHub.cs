@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Gadajec.Client.Brokers.API;
+using Gadajec.Shared.Messages.Commands;
+using Gadajec.Shared.Messages.PreviousChatArchive;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Gadajec.Server.Hubs.ChatHub
 {
     public class ChatHub : Hub
     {
-        public override async Task OnConnectedAsync()
+        public ChatHub()
         {
-            await AddMessageToChat("", "User connected!");
-            await base.OnConnectedAsync();
+
         }
-        public async Task AddMessageToChat(string user, string message)
+        public async Task JoinRoom(string roomName)
         {
-            await Clients.All.SendAsync("ReceiveMessage",user, message);
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+        }
+        public async Task SendMessage(string user, string message, string roomName)
+        {                         
+                await Clients.Group(roomName).SendAsync("ReceiveMessage", user, message);            
         }
     }
 }

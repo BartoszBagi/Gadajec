@@ -32,7 +32,9 @@ namespace Gadajec.Client.Service.Authentication
         public async Task Logout()
         {
             await ((ApiAuthenticationStateProvider)authenticationStateProvider).LoggedOut();
+            
         }
+
     }
 
 }

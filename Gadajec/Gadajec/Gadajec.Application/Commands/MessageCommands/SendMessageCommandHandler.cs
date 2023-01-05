@@ -29,10 +29,10 @@ namespace Gadajec.Application.Commands.MessageCommands
             {
                 Message message = new Message()
                 {
-                    RoomID = request.RoomID,
-                    SenderId = request.SenderId,
-                    MessageDate = request.MessageDate,
-                    MessageText = request.MessageText,
+                    RoomName = request.Message.RoomName,
+                    SenderName = request.Message.SenderName,
+                    MessageDate = request.Message.MessageDate,
+                    MessageText = request.Message.MessageText,
 
                 };
 

@@ -1,0 +1,28 @@
+﻿@page "/contacts"
+
+<PageTitle>Społeczność Gadajca</PageTitle>
+
+<HeadContent>
+    <meta name="description" content="This is test from contacts" />
+</HeadContent>
+
+@inject IApiBroker apiBroker;
+@using Gadajec.Client.Brokers.API
+@using Gadajec.Client.Shared.Templates
+@using Gadajec.Shared.Rooms.Queries
+
+ <section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h1 class="text-center exotic">Kontakty</h1>
+            </div>
+            <div class="col-sm-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Gadajec</a></li>
+                    <li class="breadcrumb-item active">Kontakty</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>

@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Components\CustomInputs\" />
+    <Folder Include="Messages\Queries\" />
   </ItemGroup>
 </Project>

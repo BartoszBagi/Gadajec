@@ -18,6 +18,7 @@ namespace Gadajec.Client.Brokers.API
         private async Task<T> GetAsync<T>(string relativeUrl) =>
             await _httpClient.GetFromJsonAsync<T>(relativeUrl);
 
+
         private async Task<HttpResponseMessage> PostAsync<T>(string relativeUrl, T content) =>
             await _httpClient.PostAsJsonAsync<T>(relativeUrl, content);
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gadajec.Persistance.Migrations
 {
     [DbContext(typeof(GadajecDBContext))]
-    [Migration("20221204200106_RoomUser")]
-    partial class RoomUser
+    [Migration("20230102175520_messages")]
+    partial class messages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,15 +27,15 @@ namespace Gadajec.Persistance.Migrations
 
             modelBuilder.Entity("ApiUserRoom", b =>
                 {
-                    b.Property<Guid>("UsersId")
+                    b.Property<Guid>("RoomsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UsersId1")
+                    b.Property<string>("UsersId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UsersId", "UsersId1");
+                    b.HasKey("RoomsId", "UsersId");
 
-                    b.HasIndex("UsersId1");
+                    b.HasIndex("UsersId");
 
                     b.ToTable("ApiUserRoom", "Gadajec");
                 });
@@ -128,11 +128,13 @@ namespace Gadajec.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoomID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("RoomName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -152,6 +154,10 @@ namespace Gadajec.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,16 +169,18 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("07b17359-20e0-4cac-8366-a9f7b37d564e"),
-                            CreatedAt = new DateTime(2022, 12, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("f3781763-351b-4570-b5e3-1e31fb7f2e36"),
+                            CreatedAt = new DateTime(2023, 1, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
-                            Name = "C# - devs"
+                            Description = "Pokój skierowany dla osób pracujących w środowisku C# .Net",
+                            Name = ".Net - devs"
                         },
                         new
                         {
-                            Id = new Guid("a477c367-042e-4a04-98ec-f0807741d190"),
-                            CreatedAt = new DateTime(2022, 12, 4, 21, 1, 6, 381, DateTimeKind.Local).AddTicks(7561),
+                            Id = new Guid("29d0c0af-6240-47e1-ba12-fc5f428013a8"),
+                            CreatedAt = new DateTime(2023, 1, 2, 18, 55, 19, 726, DateTimeKind.Local).AddTicks(6803),
                             CreatedBy = "Admin",
+                            Description = "Tutaj porozmawiamy o SQL",
                             Name = "SQL - devs"
                         });
                 });
@@ -314,13 +322,13 @@ namespace Gadajec.Persistance.Migrations
                 {
                     b.HasOne("Gadajec.Domain.Models.Room", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Gadajec.Application.Common.Models.ApiUser", null)
                         .WithMany()
-                        .HasForeignKey("UsersId1")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

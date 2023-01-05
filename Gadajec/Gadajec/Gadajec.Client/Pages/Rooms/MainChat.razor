@@ -1,9 +1,12 @@
-﻿@page "/mainchat"
+﻿@page "/chat"
+
 @using Gadajec.Client.Brokers.API
 
 @inject NavigationManager NavigationManager
 @inject IApiBroker apiBroker;
 @inject IJSRuntime JSRuntime
+@inject AuthenticationStateProvider provider
+
 <PageTitle>Gadajec Chat Publiczny</PageTitle>
 <HeadContent>
     <meta name="description" content="This is test from posts" />
@@ -16,17 +19,17 @@
     <div class="input-group text-center">
         <!--<input @bind="username" class="form-control" placeholder="What's your name?">-->
         <button class="btn btn-primary form-control-append" @onclick="Connect">
-            Dołącz do drużyny
+            Dołącz do drużyny!
         </button>
     </div>
 }
 else
 {
     <textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">
-        @messages
+        @Messages
                 </textarea>
     <div class="input-group float-end" style="width: 70vw">
-        <input @bind-value="message"
+        <input @bind-value="Message"
            @bind-value:event="oninput"
            @onkeyup="HandleInput"
            class="form-control">
@@ -41,21 +44,46 @@ else
 
     ////////////// SignalR HUB /////////////
     private HubConnection? hubConnection;
-    private string messages = string.Empty;
-    private string username = string.Empty;
-    private string message = string.Empty;
+    private string Messages = string.Empty;
+    private string UserName = string.Empty;
+    private string Message = string.Empty;
     ElementReference TextAreaRef;
+
+    public string? RoomName { get; set; } = "MainChat";
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            GetLoggedUser();            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw;
+        }
+
+        RoomName = RoomName ?? "domyślny";
+    }
+
+     private async Task GetLoggedUser()
+    {
+        var details = await provider.GetAuthenticationStateAsync();
+        UserName = details.User.Identity?.Name;
+    }
 
     private async Task Connect()
     {
+
+
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub?username={username}"))
+            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub?username={UserName}"))
             .Build();
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
             var msg = $"{(string.IsNullOrEmpty(user) ? "" : user + ": ")}{message}";
-            messages += msg + "\n";
+            Messages += msg + "\n";
             JSRuntime.InvokeVoidAsync("scrollToBottom", TextAreaRef);
             StateHasChanged();
         });
@@ -67,8 +95,8 @@ else
     {
         if (hubConnection != null)
         {
-            await hubConnection.SendAsync("AddMessageToChat", username, message);
-            message = string.Empty;
+            await hubConnection.SendAsync("AddMessageToChat", UserName, Message);
+            Message = string.Empty;
         }
     }
 

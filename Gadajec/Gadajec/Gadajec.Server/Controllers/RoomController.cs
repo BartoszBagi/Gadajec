@@ -35,9 +35,10 @@ namespace Gadajec.Server.Controllers
 
         [HttpPost]
         [Route("addUser")]
-        public async Task<IActionResult> PostAsync([FromBody] AddUserRoomCommand command)
+        public async Task<IActionResult> PostAsync(RoomUserDto roomUser)
         {
-            var result = await Mediator.Send(command);
+            var result = await Mediator.Send(new AddUserRoomCommand() { 
+                    RoomUser = roomUser});
             return Ok(result);
         }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gadajec.Persistance.Migrations
 {
     [DbContext(typeof(GadajecDBContext))]
-    [Migration("20221130165947_Init")]
+    [Migration("20221231100619_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace Gadajec.Persistance.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApiUserRoom", b =>
+                {
+                    b.Property<Guid>("RoomsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoomsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ApiUserRoom", "Gadajec");
+                });
 
             modelBuilder.Entity("Gadajec.Application.Common.Models.ApiUser", b =>
                 {
@@ -137,6 +152,10 @@ namespace Gadajec.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -148,16 +167,18 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2dbd19ce-ed79-43b4-a05b-39f38fd57e2a"),
-                            CreatedAt = new DateTime(2022, 11, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("6a98bb42-c925-4e15-a650-ce7bf06173d5"),
+                            CreatedAt = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
-                            Name = "C# - devs"
+                            Description = "Pokój skierowany dla osób pracujących w środowisku C# .Net",
+                            Name = ".Net - devs"
                         },
                         new
                         {
-                            Id = new Guid("d1d765ef-f867-4416-8efd-08320bb449d9"),
-                            CreatedAt = new DateTime(2022, 11, 30, 17, 59, 47, 38, DateTimeKind.Local).AddTicks(9892),
+                            Id = new Guid("ead53eca-072e-4751-bd4d-204d388d6df0"),
+                            CreatedAt = new DateTime(2022, 12, 31, 11, 6, 19, 517, DateTimeKind.Local).AddTicks(1908),
                             CreatedBy = "Admin",
+                            Description = "Tutaj porozmawiamy o SQL",
                             Name = "SQL - devs"
                         });
                 });
@@ -293,6 +314,21 @@ namespace Gadajec.Persistance.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", "Gadajec");
+                });
+
+            modelBuilder.Entity("ApiUserRoom", b =>
+                {
+                    b.HasOne("Gadajec.Domain.Models.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gadajec.Application.Common.Models.ApiUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

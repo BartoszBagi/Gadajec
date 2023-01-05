@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Gadajec.Shared.Rooms.Commands;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ namespace Gadajec.Application.Commands.RoomCommands.AddRoomUser
 {
     public class AddUserRoomCommand : IRequest<bool>
     {
-        public Guid UserID { get; set; }
-        public Guid RoomID { get; set; }
+        public RoomUserDto RoomUser { get; set; }
 
     }
 }
