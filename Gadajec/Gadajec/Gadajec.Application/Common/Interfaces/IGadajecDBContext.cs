@@ -1,4 +1,5 @@
-﻿using Gadajec.Domain.Models;
+﻿using Gadajec.Application.Common.Models;
+using Gadajec.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Gadajec.Application.Common.Interfaces
     {
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
-
+        public DbSet<ApiUser> Users { get; set; }
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
     }
 }

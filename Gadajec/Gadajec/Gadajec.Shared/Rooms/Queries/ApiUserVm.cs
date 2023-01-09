@@ -10,6 +10,7 @@ namespace Gadajec.Shared.Rooms.Queries
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
         public virtual List<RoomForListVm> Rooms { get; set; } = new List<RoomForListVm>();
     }
 }

@@ -5,6 +5,7 @@
 @using Gadajec.Shared.Rooms.Commands
 @using Newtonsoft.Json
 @using System.Net.Http.Headers
+@inject AuthenticationStateProvider provider
 
 <EditForm Model="@NewRoom" OnSubmit="OnSubmitMethod">
 <section class="content-header">
@@ -57,9 +58,11 @@
     <div class="row">
         <div class="col-10">
             <a href="#" class="btn btn-secondary">Zamknij</a>
-            <input type="submit" value="Utwórz nowy pokój" class="btn btn-success float-right" href="#">
+            <input type="submit" value="Utwórz nowy pokój" class="btn btn-success float-right" href="/">
         </div>
+       <p>@created</p>
     </div>
+    
 @*    <div style="margin-left:10px;" class="row">
         Nazwa pokoju: @NewRoom.Name <br />  
         Opis: @NewRoom.Description <br /> 
@@ -68,17 +71,31 @@
 </EditForm>
 <!-- /.content -->
 @code {
-    public AddRoomVm NewRoom { get; set; } = new(){CreatedBy = "Admin", CreatedAt = DateTime.Now };
+    public static string? UserName { get; set; }
+    public AddRoomVm NewRoom { get; set; } = new(){CreatedBy = UserName, CreatedAt = DateTime.Now };
+    private string created = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await GetLoggedUser();
+    }
+
+    private async Task GetLoggedUser()
+    {
+        var details = await provider.GetAuthenticationStateAsync();
+        UserName = details.User.Identity?.Name;
+    }
 
     private async Task OnSubmitMethod(EditContext editContext)
     {
         if (editContext.Validate())
         {
             await apiBroker.AddRoomAsync(NewRoom);
-
+            created = "Utworzono pokój";
         }
         else
         {
+            created = "Błąd przy tworzeniu pokoju";
             Console.WriteLine("Post has not been validated");
         }
     }

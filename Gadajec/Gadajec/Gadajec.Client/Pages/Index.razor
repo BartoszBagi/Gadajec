@@ -14,12 +14,11 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-12">
-                <h1 class="text-center exotic m-0">Gadajec</h1>
+            <div class="col-sm-12">                
             </div><!-- /.col -->
             <div class="col-sm-12">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="/">Home</a></li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,8 +30,7 @@
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            HTML5 Notification supported: @_notificationSupported
-            Notification user consent: @_htmlNotificationPermission
+            
             @if (_htmlNotificationPermission != HtmlNotificationPermissionTypes.Granted)
             {
                 <button class="btn btn-primary" @onclick="RequestPermission">Request User Permission</button>                
@@ -41,6 +39,9 @@
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
+    <div class="col-sm-12">
+        <img src="/dist/img/GadajecLogo.PNG" class="center" />
+    </div>
 </section>
 
 @code {

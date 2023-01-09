@@ -1,6 +1,7 @@
 ﻿@page "/chat"
 
 @using Gadajec.Client.Brokers.API
+@using Gadajec.Shared.Messages.Commands
 
 @inject NavigationManager NavigationManager
 @inject IApiBroker apiBroker;
@@ -14,101 +15,105 @@
 
 <h1 class="text-center exotic">Ogólne Pogadajki</h1>
 
-@if (!IsConnected)
-{
-    <div class="input-group text-center">
-        <!--<input @bind="username" class="form-control" placeholder="What's your name?">-->
-        <button class="btn btn-primary form-control-append" @onclick="Connect">
-            Dołącz do drużyny!
-        </button>
-    </div>
-}
-else
-{
-    <textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">
-        @Messages
+<textarea class="float-end" style="width: 70vw; height: 70vh;" @ref="TextAreaRef">      
+        @foreach (var message in messages)
+        {
+            @message
+            @newLine
+        }      
                 </textarea>
     <div class="input-group float-end" style="width: 70vw">
-        <input @bind-value="Message"
+        <input @bind-value="messageInput"
            @bind-value:event="oninput"
            @onkeyup="HandleInput"
            class="form-control">
-        <button class="btn btn-primary form-group-append"
-            @onclick="Send"
-            disabled="@(!IsConnected)">
-            Send
-        </button>
+        <button class="btn btn-primary form-group-append" @onclick="Send" disabled="@(!IsConnected)">Send</button>
     </div>
-}
+    <div>
+  @foreach (var c in emojis)
+  {
+    <button type="button" class="btn btn-primary m-1" @onclick="(() => AddEmoji(c))" >@c</button>
+  }
+</div>
 @code {
-
-    ////////////// SignalR HUB /////////////
-    private HubConnection? hubConnection;
-    private string Messages = string.Empty;
-    private string UserName = string.Empty;
-    private string Message = string.Empty;
+    private string? RoomName = "MainChat";
+    public string? UserName { get; set; }
+    public HubConnection hubConnection;
+    private List<string> messages = new List<string>();
+    private string messageInput;
+    private string newLine = "\n";
     ElementReference TextAreaRef;
 
-    public string? RoomName { get; set; } = "MainChat";
-
-    protected override void OnInitialized()
+    protected override async Task OnParametersSetAsync()
     {
-        try
-        {
-            GetLoggedUser();            
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            throw;
-        }
-
-        RoomName = RoomName ?? "domyślny";
-    }
-
-     private async Task GetLoggedUser()
-    {
-        var details = await provider.GetAuthenticationStateAsync();
-        UserName = details.User.Identity?.Name;
-    }
-
-    private async Task Connect()
-    {
-
+        await GetLoggedUser();
+        await apiBroker.AddRoomUserAsync(new RoomUserDto(){UserName = UserName, RoomName = RoomName});       
 
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub?username={UserName}"))
+            .WithUrl(NavigationManager.ToAbsoluteUri($"/chathub"))
             .Build();
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            var msg = $"{(string.IsNullOrEmpty(user) ? "" : user + ": ")}{message}";
-            Messages += msg + "\n";
+            var encodedMsg = $"{user}: {message}";
+
+            messages.Add(encodedMsg);
             JSRuntime.InvokeVoidAsync("scrollToBottom", TextAreaRef);
             StateHasChanged();
         });
 
         await hubConnection.StartAsync();
+
+        await hubConnection.SendAsync("JoinRoom", RoomName);
+
+        await GetMessages();
     }
 
-    private async Task Send()
+    private async Task GetMessages()
     {
-        if (hubConnection != null)
+        var previousMessages = await apiBroker.GetMessagesAsync(RoomName);
+        if (previousMessages != null)
         {
-            await hubConnection.SendAsync("AddMessageToChat", UserName, Message);
-            Message = string.Empty;
+            foreach (var previousMessage in previousMessages)
+            {
+                var encodedMsg = $"{previousMessage.SenderName}: {previousMessage.MessageText}";
+                messages.Add(encodedMsg);
+            }
         }
+
     }
+
+    private async Task GetLoggedUser()
+    {
+        var details = await provider.GetAuthenticationStateAsync();
+        UserName = details.User.Identity?.Name;
+    }
+
+    async Task Send()
+    {
+        await hubConnection.SendAsync("SendMessage", UserName, messageInput, RoomName);
+        var newMessage = new MessageVm()
+                {
+                    MessageDate = DateTime.Now,
+                    MessageText = messageInput,
+                    RoomName = RoomName,
+                    SenderName = UserName
+                };
+        messageInput = string.Empty;
+        await apiBroker.SendMessageAsync(newMessage);
+    }
+     
+    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
 
     private async Task HandleInput(KeyboardEventArgs args)
     {
         if (args.Key.Equals("Enter"))
-        {
+        {          
             await Send();
         }
     }
 
-    public bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+
 
     public async ValueTask DisposeAsync()
     {
@@ -118,4 +123,16 @@ else
             await hubConnection.DisposeAsync();
         }
     }
+
+    String[] emojis = new String[] { "\U0001F600", "\U0001F601", "\U0001F602", "\U0001F603","\U0001F604","\U0001F605","\U0001F606","\U0001F607"
+    ,"\U0001F608","\U0001F609","\U0001F610","\U0001F611","\U0001F612","\U0001F613","\U0001F614","\U0001F615","\U0001F616","\U0001F617"
+    ,"\U0001F618","\U0001F619","\U0001F620","\U0001F621","\U0001F622","\U0001F623","\U0001F624","\U0001F625","\U0001F626","\U0001F627"
+    ,"\U0001F628","\U0001F629","\U0001F630","\U0001F631","\U0001F632","\U0001F633","\U0001F634","\U0001F635"};
+
+   //Add Emoji to Message
+   protected async Task AddEmoji(string emoji)
+   {
+       messageInput += emoji;
+       StateHasChanged();
+   }
 }

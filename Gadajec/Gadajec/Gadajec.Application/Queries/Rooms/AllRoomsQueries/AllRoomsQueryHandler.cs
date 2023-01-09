@@ -22,15 +22,14 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
 
         public async Task<List<RoomForListVm>> Handle(AllRoomsQuery request, CancellationToken cancellationToken)
         {
-
-            var rooms = await _context.Rooms.ToListAsync();
+            var rooms =  _context.Rooms.Where(r => r.Name != "MainChat").ToList();
             return MapRoomsToVm(rooms);
         }
 
         private List<RoomForListVm> MapRoomsToVm(List<Room> rooms)
         {
             var result = new List<RoomForListVm>();
-
+            
             foreach (var room in rooms)
             {
                 var roomUsers = new List<ApiUserVm>();
@@ -40,7 +39,8 @@ namespace Gadajec.Application.Queries.Rooms.AllRoomsQueries
                     var roomUser = new ApiUserVm()
                     {
                         FirstName = user.FirstName,
-                        LastName = user.LastName,                        
+                        LastName = user.LastName, 
+                        Email = user.Email
                     };
                     roomUsers.Add(roomUser);
                 }

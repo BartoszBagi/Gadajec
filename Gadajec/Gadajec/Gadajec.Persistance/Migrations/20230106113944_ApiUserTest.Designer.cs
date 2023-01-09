@@ -4,6 +4,7 @@ using Gadajec.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gadajec.Persistance.Migrations
 {
     [DbContext(typeof(GadajecDBContext))]
-    partial class GadajecDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230106113944_ApiUserTest")]
+    partial class ApiUserTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,40 +113,6 @@ namespace Gadajec.Persistance.Migrations
                     b.ToTable("AspNetUsers", "Gadajec");
                 });
 
-            modelBuilder.Entity("Gadajec.Domain.Models.Contact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApiUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApiUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApiUserId");
-
-                    b.ToTable("Contact", "Gadajec");
-                });
-
             modelBuilder.Entity("Gadajec.Domain.Models.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -201,15 +169,7 @@ namespace Gadajec.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3754ac17-715f-484a-b8d6-3bcee104e2de"),
-                            CreatedAt = new DateTime(2023, 1, 6, 0, 0, 0, 0, DateTimeKind.Local),
-                            CreatedBy = "Admin",
-                            Description = "Pokój główny",
-                            Name = "MainChat"
-                        },
-                        new
-                        {
-                            Id = new Guid("90a1ebf2-22ce-4558-8e70-c178e4e7ffef"),
+                            Id = new Guid("20ecbaaf-4918-4afe-b8d6-d6d3c579f8d6"),
                             CreatedAt = new DateTime(2023, 1, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Admin",
                             Description = "Pokój skierowany dla osób pracujących w środowisku C# .Net",
@@ -217,8 +177,8 @@ namespace Gadajec.Persistance.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ec2d852e-463b-4283-a21c-bcc7ab474449"),
-                            CreatedAt = new DateTime(2023, 1, 6, 17, 58, 11, 991, DateTimeKind.Local).AddTicks(2585),
+                            Id = new Guid("2b75273f-761b-4657-b3b3-affc8695787b"),
+                            CreatedAt = new DateTime(2023, 1, 6, 12, 39, 43, 749, DateTimeKind.Local).AddTicks(9487),
                             CreatedBy = "Admin",
                             Description = "Tutaj porozmawiamy o SQL",
                             Name = "SQL - devs"
@@ -373,13 +333,6 @@ namespace Gadajec.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Gadajec.Domain.Models.Contact", b =>
-                {
-                    b.HasOne("Gadajec.Application.Common.Models.ApiUser", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("ApiUserId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -429,11 +382,6 @@ namespace Gadajec.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Gadajec.Application.Common.Models.ApiUser", b =>
-                {
-                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

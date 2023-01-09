@@ -1,21 +1,16 @@
 ﻿using Gadajec.Application.Common.Interfaces;
 using Gadajec.Domain.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
 {
     public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, Guid>
     {
-        private readonly IGadajecDBContext _gadajecDBContext;
+        private readonly IGadajecDBContext context;
 
         public CreateRoomCommandHandler(IGadajecDBContext gadajecDBContext)
         {
-            _gadajecDBContext = gadajecDBContext;
+            context = gadajecDBContext;
 
         }
 
@@ -23,7 +18,7 @@ namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
         {
             try
             {
-                if (_gadajecDBContext.Rooms.Any(r => r.Name == request.AdRoomVm.Name))
+                if (context.Rooms.Any(r => r.Name == request.AdRoomVm.Name))
                 {
                     return Guid.Empty;
                 }
@@ -40,8 +35,8 @@ namespace Gadajec.Application.Commands.RoomCommands.CreateRoom
                     };
 
 
-                    _gadajecDBContext.Rooms.Add(room);
-                    await _gadajecDBContext.SaveChangesAsync(true);
+                    context.Rooms.Add(room);
+                    await context.SaveChangesAsync(true);
 
                     return room.Id;
                 }

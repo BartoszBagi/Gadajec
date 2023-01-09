@@ -13,7 +13,7 @@ namespace Gadajec.Application.Common.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public virtual List<Contact> Contacts { get; set; } = new List<Contact>();
         public virtual List<Room> Rooms { get; set; } = new List<Room>();
 
     }

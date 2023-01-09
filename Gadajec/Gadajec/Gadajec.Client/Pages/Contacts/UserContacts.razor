@@ -1,13 +1,12 @@
-﻿@page "/contacts"
+﻿@page "/usercontacts"
 
-<PageTitle>Społeczność Gadajca</PageTitle>
+<PageTitle>Kontakty</PageTitle>
 
 <HeadContent>
     <meta name="description" content="This is test from contacts" />
 </HeadContent>
 
 @inject IApiBroker apiBroker;
-
 @using Gadajec.Client.Brokers.API
 @using Gadajec.Client.Shared.Templates
 @using Gadajec.Shared.Rooms.Queries
@@ -18,12 +17,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="text-center exotic">Społeczność Gadajca</h1>
+                <h1 class="text-center exotic">Kontakty</h1>
             </div>
             <div class="col-sm-12">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Gadajec</a></li>
-                    <li class="breadcrumb-item active">Społeczność</li>
+                    <li class="breadcrumb-item active">Kontakty</li>
                 </ol>
             </div>
         </div>
@@ -58,12 +57,12 @@
                             Email
                         </th>
                         <th style="width: 6%">
-                            Dodaj kontakt
+                            Napisz do użytkownika
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <Virtualize ItemsProvider="LoadUsers" Context="item">
+                    <Virtualize ItemsProvider="LoadContacts" Context="item">
                             <tr>
                                 <td>
                                     #
@@ -78,10 +77,10 @@
                                     @item.Email
                                 </td>
                                 <td class="project-actions text-right">                                    
-                                    <a class="btn btn-primary btn-sm" @onclick="() => AddContact(item.Email)">
+                                    <a class="btn btn-primary btn-sm" @onclick="() => SendPrivateMessage(item.Email)">
                                         <i class="fa fa-plus">
                                         </i>
-                                        Dodaj kontakt
+                                        Chat prywatny
                                     </a>
                                 </td>
                             </tr>
@@ -95,26 +94,29 @@
 
 </section>
 
-@code {
+@code 
+{
     private string UserName { get; set; }
+    private ApiUserVm testUser = new ApiUserVm() { Email = "test@mail.com", FirstName = "testUser", LastName = "testus" };
 
     protected override async Task OnParametersSetAsync()
     {
         await GetLoggedUser();
     }
 
-    protected async ValueTask<ItemsProviderResult<ApiUserVm>> LoadUsers(ItemsProviderRequest request)
+    protected async ValueTask<ItemsProviderResult<ApiUserVm>> LoadContacts(ItemsProviderRequest request)
     {
+
         var pageSize = request.Count;
         var index = request.StartIndex;
-        var items = await apiBroker.GetAllUsersAsync();
-        return new ItemsProviderResult<ApiUserVm>(items.Skip(index).Take(pageSize), items.Count());
+        var items = await apiBroker.GetAllContactsAsync(UserName);
+        //var items = new List<ApiUserVm>();
+        //items.Add(testUser);
+        return new ItemsProviderResult<ApiUserVm>(items.Skip(index).Take(pageSize), items.Count());        
     }
 
-    private async Task AddContact(string contactEmail)
+    private async Task SendPrivateMessage(string contactEmail)
     {
-        ContactVm contactVm = new ContactVm() {ApiUserEmail = UserName, ContactEmail = contactEmail};
-        await apiBroker.AddContactAsync(contactVm);
     }
 
      private async Task GetLoggedUser()

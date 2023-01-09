@@ -21,7 +21,8 @@ namespace Gadajec.Persistance
         public string Schema { get; } = "Gadajec";
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
-
+        public DbSet<ApiUser> Users { get; set; }
+        
         public GadajecDBContext(DbContextOptions<GadajecDBContext> options) : base(options)
         {
 
