@@ -6,7 +6,8 @@ namespace Gadajec.Client.Brokers.API
     public partial interface IApiBroker
     {
         Task<List<ApiUserVm>> GetAllUsersAsync();
-        Task<List<ApiUserVm>> GetAllContactsAsync(string userName);
-        Task AddContactAsync(ContactVm contactVm);
+        Task<List<ContactVm>> GetAllContactsAsync(string userName);
+        Task AddContactAsync(AddContact contactVm);
+        Task DeleteContactAsync(DeleteContact contactVm);
     }
 }

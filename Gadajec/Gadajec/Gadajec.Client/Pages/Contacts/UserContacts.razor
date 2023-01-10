@@ -59,6 +59,9 @@
                         <th style="width: 6%">
                             Napisz do użytkownika
                         </th>
+                        <th style="width: 5%">
+                            Usuń kontakt
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,18 +72,24 @@
                                 </td>
                                 <td>
                                     <a>
-                                        @item.FirstName @item.LastName
+                                        @item.ContactFirstName @item.ContactLastName
                                     </a>
                                     <br/>
                                 </td>
                                 <td>
-                                    @item.Email
+                                    @item.ContactEmail
                                 </td>
                                 <td class="project-actions text-right">                                    
-                                    <a class="btn btn-primary btn-sm" @onclick="() => SendPrivateMessage(item.Email)">
-                                        <i class="fa fa-plus">
-                                        </i>
+                                    <a class="btn btn-primary btn-sm" @onclick="() => SendPrivateMessage(item.ContactEmail)">
+                                        <i class="fas fa-user"></i>
                                         Chat prywatny
+                                    </a>
+                                </td>
+                                <td class="project-actions text-right">                                    
+                                    <a class="btn btn-danger btn-sm" @onclick="() => DeleteContact(item.ContactEmail)" href="#">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Usuń
                                     </a>
                                 </td>
                             </tr>
@@ -97,22 +106,29 @@
 @code 
 {
     private string UserName { get; set; }
-    private ApiUserVm testUser = new ApiUserVm() { Email = "test@mail.com", FirstName = "testUser", LastName = "testus" };
 
     protected override async Task OnParametersSetAsync()
     {
         await GetLoggedUser();
     }
 
-    protected async ValueTask<ItemsProviderResult<ApiUserVm>> LoadContacts(ItemsProviderRequest request)
+    protected async ValueTask<ItemsProviderResult<ContactVm>> LoadContacts(ItemsProviderRequest request)
     {
-
         var pageSize = request.Count;
         var index = request.StartIndex;
         var items = await apiBroker.GetAllContactsAsync(UserName);
-        //var items = new List<ApiUserVm>();
-        //items.Add(testUser);
-        return new ItemsProviderResult<ApiUserVm>(items.Skip(index).Take(pageSize), items.Count());        
+
+        return new ItemsProviderResult<ContactVm>(items.Skip(index).Take(pageSize), items.Count());        
+    }
+
+    private async Task DeleteContact(string contactEmail)
+    {
+        var contactToDelete = new DeleteContact()
+            {
+                ApiUserEmail = UserName,
+                ContactEmail = contactEmail
+            };
+        await apiBroker.DeleteContactAsync(contactToDelete);
     }
 
     private async Task SendPrivateMessage(string contactEmail)

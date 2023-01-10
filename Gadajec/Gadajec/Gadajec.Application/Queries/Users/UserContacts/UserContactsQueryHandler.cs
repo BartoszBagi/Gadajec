@@ -14,22 +14,19 @@ namespace Gadajec.Application.Queries.Users.UserContacts
     public class UserContactsQueryHandler : IRequestHandler<UserContactsQuery, List<ContactVm>>
     {
         private readonly IGadajecDBContext context;
-        private UserManager<ApiUser> usermanager;
 
-        public UserContactsQueryHandler(IGadajecDBContext context, UserManager<ApiUser> usermanager)
+        public UserContactsQueryHandler(IGadajecDBContext context)
         {
             this.context = context;
-            this.usermanager = usermanager;
         }
         public async Task<List<ContactVm>> Handle(UserContactsQuery request, CancellationToken cancellationToken)
         {
-            var list = new List<ContactVm>();
             var user = context.Users.FirstOrDefault(u => u.Email == request.UserName);
             var userContacts = user.Contacts.ToList();
-            var userman = await usermanager.FindByEmailAsync(request.UserName);
-            var usermanContacts = userman.Contacts.ToList();
-
-            foreach (var contact in userContacts)
+ 
+            var contacts = context.Contacts.Where(c => c.ApiUserName == request.UserName).ToList();
+            var contactsVm = new List<ContactVm>();
+            foreach (var contact in contacts)
             {
                 var contactVm = new ContactVm()
                 {
@@ -38,10 +35,10 @@ namespace Gadajec.Application.Queries.Users.UserContacts
                     ContactFirstName = contact.ContactFirstName,
                     ContactLastName = contact.ContactLastName
                 };
-                list.Add(contactVm);
+                contactsVm.Add(contactVm);
             }
 
-            return list;
+            return contactsVm;
         }
     }
 }

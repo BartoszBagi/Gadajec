@@ -12,6 +12,6 @@ namespace Gadajec.Application.Commands.UserCommands.AddContact
 {
     public class AddContactCommand : IRequest<bool>
     {
-        public ContactVm Contact { get; set; }
+        public Shared.Users.Commands.AddContact Contact { get; set; }
     }
 }

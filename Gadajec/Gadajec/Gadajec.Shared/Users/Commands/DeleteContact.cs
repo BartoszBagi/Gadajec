@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Gadajec.Shared.Users.Commands
 {
-    public class ContactVm
+    public class DeleteContact
     {
-        public string ContactFirstName { get; set; }
-        public string ContactLastName { get; set; }
-        public string ApiUserEmail { get; set; } 
+        public string ApiUserEmail { get; set; }
         public string ContactEmail { get; set; }
     }
 }

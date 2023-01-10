@@ -1,4 +1,5 @@
 ﻿using Gadajec.Application.Commands.UserCommands.AddContact;
+using Gadajec.Application.Commands.UserCommands.DeleteContact;
 using Gadajec.Application.Queries.Users.AllUsersQueries;
 using Gadajec.Application.Queries.Users.UserContacts;
 using Gadajec.Shared.Rooms.Queries;
@@ -32,10 +33,20 @@ namespace Gadajec.Server.Controllers
 
         [HttpPost]
         [Route("addContact")]
-        public async Task<ActionResult<bool>> PostAsync([FromBody] ContactVm vm)
+        public async Task<ActionResult<bool>> PostAsync([FromBody] AddContact vm)
         {
             var result = await Mediator.Send(new AddContactCommand() { Contact = vm });
             return result;
         }
+
+        [HttpPost]
+        [Route("deleteContact")]
+        public async Task<ActionResult<bool>> PostAsync([FromBody] DeleteContact vm)
+        {
+            var result = await Mediator.Send(new DeleteContactCommand() { ContactToDelete = vm });
+            return result;
+        }
+
+        
     }
 }

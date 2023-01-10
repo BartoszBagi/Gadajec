@@ -14,6 +14,7 @@ namespace Gadajec.Application.Common.Interfaces
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<ApiUser> Users { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
     }
 }

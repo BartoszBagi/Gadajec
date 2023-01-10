@@ -113,7 +113,7 @@
 
     private async Task AddContact(string contactEmail)
     {
-        ContactVm contactVm = new ContactVm() {ApiUserEmail = UserName, ContactEmail = contactEmail};
+        AddContact contactVm = new AddContact() {ApiUserEmail = UserName, ContactEmail = contactEmail};
         await apiBroker.AddContactAsync(contactVm);
     }
 
